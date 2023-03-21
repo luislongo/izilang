@@ -4,7 +4,7 @@
   "description": "Izilang Compiler",
   "main": "index.ts",
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage",
     "start": "nodemon ./src/index.ts"
   },
   "author": "",
