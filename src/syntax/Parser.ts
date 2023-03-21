@@ -19,14 +19,14 @@ export class Parser {
 
     if (token.type === TokenType.Identifier) {
       this.assignment();
-      this.RS_expression();
+      this.rs_expression();
     }
     if (token.type === TokenType.EndOfFile) {
       return;
     }
   }
 
-  RS_expression() {
+  rs_expression() {
     const token = this.lexer.nextToken();
 
     if (token.type === TokenType.OpenParenthesis) {
@@ -63,7 +63,7 @@ export class Parser {
   operation() {
     const token = this.lexer.nextToken();
     if (isArithmeticOperator(token)) {
-      this.RS_expression();
+      this.rs_expression();
       return;
     }
     if (token.type === TokenType.CloseParenthesis) {
