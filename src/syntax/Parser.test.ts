@@ -118,4 +118,39 @@ describe("Parser", () => {
     expect(() => parser.parse()).not.toThrow(SyntaxError);
     console.log("token", lexer.tokens);
   });
+
+  test("Handles identifiers in the right side of operation", () => {
+    const lexer = new Lexer(new MainGrammarRule(), "cat = dog;");
+    const parser = new Parser(lexer);
+
+    expect(() => parser.parse()).not.toThrow(SyntaxError);
+    console.log("token", lexer.tokens);
+  });
+
+  test("Handles operations and nesting with identifiers", () => {
+    const lexer = new Lexer(
+      new MainGrammarRule(),
+      "cat = dog + (1 + 2) * (3 + dog);"
+    );
+    const parser = new Parser(lexer);
+
+    expect(() => parser.parse()).not.toThrow(SyntaxError);
+    expect(lexer.tokens.length).toBe(16);
+
+    console.log("token", lexer.tokens);
+  });
+
+  test("Throws error on missing semicolon", () => {
+    const lexer = new Lexer(new MainGrammarRule(), "cat = dog");
+    const parser = new Parser(lexer);
+
+    expect(() => parser.parse()).toThrow(SyntaxError);
+  });
+
+  test("Throws error on subsequent identifiers", () => {
+    const lexer = new Lexer(new MainGrammarRule(), "cat = dog dog");
+    const parser = new Parser(lexer);
+
+    expect(() => parser.parse()).toThrow(SyntaxError);
+  });
 });

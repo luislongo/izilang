@@ -32,10 +32,14 @@ export class Parser {
     if (token.type === TokenType.OpenParenthesis) {
       this.nestedRSExpression();
       this.nestedOperation();
+      this.operation();
       return;
     }
 
-    if (token.type === TokenType.Number) {
+    if (
+      token.type === TokenType.Number ||
+      token.type === TokenType.Identifier
+    ) {
       this.operation();
       return;
     }
@@ -84,7 +88,10 @@ export class Parser {
 
       return;
     }
-    if (token.type === TokenType.Number) {
+    if (
+      token.type === TokenType.Number ||
+      token.type === TokenType.Identifier
+    ) {
       return;
     }
     if (token.type === TokenType.CloseParenthesis) {
